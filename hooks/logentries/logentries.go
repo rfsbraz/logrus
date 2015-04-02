@@ -4,12 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"time"
 	"github.com/rfsbraz/logrus"
-)
-
-const (
-	format = "Jan 2 15:04:05"
 )
 
 // Logentries to send logs via the Token-Based interface
