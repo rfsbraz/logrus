@@ -30,9 +30,8 @@ func NewLogentriesHook(token string) (*LogentriesHook, error) {
 
 // Fire is called when a log event is fired.
 func (hook *LogentriesHook) Fire(entry *logrus.Entry) error {
-	date := time.Now().Format(format)
 	msg, _ := entry.String()
-	payload := fmt.Sprintf( hook.Token + " %s %s: %s", date, msg)
+	payload := fmt.Sprintf( hook.Token + "%s", msg)
 
 	bytesWritten, err := hook.TCPConn.Write([]byte(payload))
 	if err != nil {
