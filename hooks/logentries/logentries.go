@@ -2,14 +2,14 @@ package logrus_logentries
 
 import (
 	"fmt"
+	"github.com/rfsbraz/logrus"
 	"net"
 	"os"
-	"github.com/rfsbraz/logrus"
 )
 
 // Logentries to send logs via the Token-Based interface
 type LogentriesHook struct {
-	Token string
+	Token   string
 	TCPConn net.Conn
 }
 
@@ -26,11 +26,11 @@ func NewLogentriesHook(token string) (*LogentriesHook, error) {
 // Fire is called when a log event is fired.
 func (hook *LogentriesHook) Fire(entry *logrus.Entry) error {
 	msg, _ := entry.String()
-	payload := fmt.Sprintf( hook.Token + "%s", msg)
+	payload := fmt.Sprintf(hook.Token+"%s", msg)
 
 	bytesWritten, err := hook.TCPConn.Write([]byte(payload))
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to send log line to Papertrail via UDP. Wrote %d bytes before error: %v", bytesWritten, err)
+		fmt.Fprintf(os.Stderr, "Unable to send log line to Logentries via UDP. Wrote %d bytes before error: %v", bytesWritten, err)
 		return err
 	}
 
